@@ -9,6 +9,7 @@
  * ------------------------------------------------------------------------- */
 #include <Arduino.h>
 #include <serialComm.h>
+#include <sensorArray.h>
 
 #include "config.h"
 
@@ -32,13 +33,36 @@ void setup()
  * ------------------------------------------------------------------------- */
 void loop()
 {
+	/*	Variables. */
+	sensorResponse direction;
+
 	/* Chequeo que los CNY no me den que estoy en la linea.  */
 
-	/* Sensor Izquierdo, si detecta giro a la izquierda 90º. */
+	/* Evaluo los sensores. */
+	direction =  sensorEvaluate();
+	switch(direction)
+	{
+		case SENSOR_CENTER:
+			/* Objetivo al Centro. */
+			Serial.println("Centro!");
+			break;
 
-	/* Sensor Derecho, si detecta giro a la derecha 90º. */
+		case SENSOR_LEFT:
+			/* Objetivo a la izquierda. */
+			Serial.println("Izquierda!");
+			break;
 
-	/* Sensor Frente, si detecta encaro a fondo. */
+		case SENSOR_RIGHT:
+			/* Objetivo a la derecha. */
+			Serial.println("Derecha!");
+			break;
 
-	/* Si no tengo nada en frente, avanzo a paso tranqui... */
+		case SENSOR_FAIL:
+		default:
+			/* Si no tengo nada en frente, avanzo a paso tranqui... */
+			Serial.println("Indeterminado!");
+			break;
+	}
+	delay(1000);
+
 }
