@@ -18,23 +18,23 @@ typedef enum {
 } sysResponse;
 
 /* Declaración de pines de Motores. */
-#define MOTOR_L_PIN_E	8          /* Enable del motor L. */
-#define MOTOR_L_PIN_A	11         /*  Pin A del motor L. */
-#define MOTOR_L_PIN_B	12         /*  Pin B del motor L. */
+#define MOTOR_L_PIN_E	0          /* Enable del motor L. */
+#define MOTOR_L_PIN_A	0          /*  Pin A del motor L. */
+#define MOTOR_L_PIN_B	0          /*  Pin B del motor L. */
 
 #define MOTOR_R_PIN_E	0          /* Enable del motor R. */
 #define MOTOR_R_PIN_A	0          /*  Pin A del motor R. */
 #define MOTOR_R_PIN_B	0          /*  Pin B del motor R. */
 
 /* Declaración de pines de Sensores. */
-#define SENSOR_LEFT_TRIGGER    10  /*  Pin Trigger del sensor Izquierdo. */
-#define SENSOR_LEFT_ECHO        9  /*  Pin Echo del sensor Izquierdo. */
+#define SENSOR_LEFT_TRIGGER     2  /*  Pin Trigger del sensor Izquierdo. */
+#define SENSOR_LEFT_ECHO        3  /*  Pin Echo del sensor Izquierdo. */
 
-#define SENSOR_RIGHT_TRIGGER	8  /*  Pin Trigger del sensor Derecho. */
-#define SENSOR_RIGHT_ECHO       7  /*  Pin Echo del sensor Derecho. */
+#define SENSOR_RIGHT_TRIGGER	4  /*  Pin Trigger del sensor Derecho. */
+#define SENSOR_RIGHT_ECHO       5  /*  Pin Echo del sensor Derecho. */
 
-#define SENSOR_CENTER_TRIGGER  12  /*  Pin Trigger del sensor Central. */
-#define SENSOR_CENTER_ECHO     11  /*  Pin Echo del sensor Central. */
+#define SENSOR_CENTER_TRIGGER   6  /*  Pin Trigger del sensor Central. */
+#define SENSOR_CENTER_ECHO      7  /*  Pin Echo del sensor Central. */
 
 #define SENSOR_MAX_DISTANCE    50  /*  Distancia máxima a evaluar. */
 

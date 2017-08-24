@@ -42,13 +42,14 @@ sensorResponse sensorEvaluate(void)
 		tempC = 0xFFFF;
 	}
 
-	/*	Info de Debug.... */
+	/*	Info de Debug....
 	Serial.print("Left: ");
 	Serial.print(tempL);
 	Serial.print(" - Center: ");
 	Serial.print(tempC);
 	Serial.print(" - Right: ");
 	Serial.println(tempR);
+	*/
 
 	/* Evaluo Left vs Right si es que ambas son válidas. */
 	if (tempL < tempR)
