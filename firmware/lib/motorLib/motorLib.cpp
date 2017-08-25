@@ -6,6 +6,8 @@
  *
  *  Description:
  *  Biblioteca para el control de los motores.
+ *	A tener en cuenta:
+ *		- Pin MOTOR A es el que debe ir conectado a un PWM.
  * ------------------------------------------------------------------------- */
 #include <Arduino.h>
 

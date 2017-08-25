@@ -10,6 +10,8 @@
 #include <Arduino.h>
 #include <serialComm.h>
 #include <sensorArray.h>
+#include <motionCore.h>
+#include <motorLib.h>
 
 #include "config.h"
 
@@ -21,9 +23,11 @@ void setup()
 	/* Inicialización de módulos. */
 	serialInit();
 
-	/* Inicializacion de Sensores. */
-
 	/* Inicializacion de Motores. */
+	motionInit();
+
+	/* Motor Test. */
+	motionTest();
 
 	/* Finalizada Inicalización. */
 }
@@ -64,5 +68,4 @@ void loop()
 			break;
 	}
 	delay(1000);
-
 }
