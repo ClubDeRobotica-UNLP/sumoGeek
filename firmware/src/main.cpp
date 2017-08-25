@@ -39,30 +39,30 @@ void loop()
 	/* Chequeo que los CNY no me den que estoy en la linea.  */
 
 	/* Evaluo los sensores. */
-	direction =  sensorEvaluate();
-	switch(direction)
-	{
-		case SENSOR_CENTER:
-			/* Objetivo al Centro. */
-			Serial.println("Centro!");
-			break;
-
-		case SENSOR_LEFT:
-			/* Objetivo a la izquierda. */
-			Serial.println("Izquierda!");
-			break;
-
-		case SENSOR_RIGHT:
-			/* Objetivo a la derecha. */
-			Serial.println("Derecha!");
-			break;
-
-		case SENSOR_FAIL:
-		default:
-			/* Si no tengo nada en frente, avanzo a paso tranqui... */
-			Serial.println("Indeterminado!");
-			break;
-	}
-	delay(1000);
-
+	// direction =  sensorEvaluate();
+	// switch(direction)
+	// {
+	// 	case SENSOR_CENTER:
+	// 		/* Objetivo al Centro. */
+	// 		Serial.println("Centro!");
+	// 		break;
+	//
+	// 	case SENSOR_LEFT:
+	// 		/* Objetivo a la izquierda. */
+	// 		Serial.println("Izquierda!");
+	// 		break;
+	//
+	// 	case SENSOR_RIGHT:
+	// 		/* Objetivo a la derecha. */
+	// 		Serial.println("Derecha!");
+	// 		break;
+	//
+	// 	case SENSOR_FAIL:
+	// 	default:
+	// 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
+	// 		Serial.println("Indeterminado!");
+	// 		break;
+	// }
+	// delay(1000);
+	serialLoop();
 }

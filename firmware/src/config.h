@@ -38,4 +38,8 @@ typedef enum {
 
 #define SENSOR_MAX_DISTANCE    50  /*  Distancia máxima a evaluar. */
 
+/* Declaracion de pines del módulo BT. */
+#define COMMS_BT_RX    10
+#define COMMS_BT_TX    11
+
 #endif	/* SRC_CONFIGURATION_H_ */

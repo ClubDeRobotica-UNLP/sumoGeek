@@ -14,5 +14,6 @@
 
 /* Función de Inicialización. */
 void serialInit(void);
+void serialLoop(void);
 
 #endif	/* SRC_LIB_SERIALPARSER_H_ */
