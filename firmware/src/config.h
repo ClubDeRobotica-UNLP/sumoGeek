@@ -34,15 +34,19 @@ typedef enum {
 #define MOTOR_TURN_TIME       650  /* Tiempo en ms para girar 90º. */
 
 /* Declaración de pines de Sensores. */
-#define SENSOR_LEFT_TRIGGER     2  /*  Pin Trigger del sensor Izquierdo. */
-#define SENSOR_LEFT_ECHO        3  /*  Pin Echo del sensor Izquierdo.    */
+#define SENSOR_LEFT_TRIGGER     0  /*  Pin Trigger del sensor Izquierdo. */
+#define SENSOR_LEFT_ECHO        0  /*  Pin Echo del sensor Izquierdo.    */
 
-#define SENSOR_RIGHT_TRIGGER	4  /*  Pin Trigger del sensor Derecho.   */
-#define SENSOR_RIGHT_ECHO       5  /*  Pin Echo del sensor Derecho.      */
+#define SENSOR_RIGHT_TRIGGER	0  /*  Pin Trigger del sensor Derecho.   */
+#define SENSOR_RIGHT_ECHO       0  /*  Pin Echo del sensor Derecho.      */
 
-#define SENSOR_CENTER_TRIGGER   6  /*  Pin Trigger del sensor Central.   */
-#define SENSOR_CENTER_ECHO      7  /*  Pin Echo del sensor Central.      */
+#define SENSOR_CENTER_TRIGGER   0  /*  Pin Trigger del sensor Central.   */
+#define SENSOR_CENTER_ECHO      0  /*  Pin Echo del sensor Central.      */
 
 #define SENSOR_MAX_DISTANCE    50  /*  Distancia máxima a evaluar.       */
+
+/* Declaracion de pines del módulo BT. */
+#define COMMS_BT_RX    10
+#define COMMS_BT_TX    11
 
 #endif	/* SRC_CONFIGURATION_H_ */
