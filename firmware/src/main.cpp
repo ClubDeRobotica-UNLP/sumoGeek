@@ -25,6 +25,7 @@ void setup()
 
 	/* Inicializacion de Motores. */
 
+
 	/* Finalizada Inicalización. */
 }
 
@@ -34,10 +35,10 @@ void setup()
 void loop()
 {
 	/*	Variables. */
-	sensorResponse direction;
-
-	/* Chequeo que los CNY no me den que estoy en la linea.  */
-
+	//sensorResponse direction;
+	//
+	///* Chequeo que los CNY no me den que estoy en la linea.  */
+	//
 	/* Evaluo los sensores. */
 	// direction =  sensorEvaluate();
 	// switch(direction)
@@ -64,5 +65,7 @@ void loop()
 	// 		break;
 	// }
 	// delay(1000);
+
+	/* Serial BT Test. */
 	serialLoop();
 }
