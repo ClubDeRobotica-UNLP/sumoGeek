@@ -33,21 +33,21 @@
  /* -------------------------------------------------------------------------
   *  Función de movimiento al no detectar la direccion del objetivo.
   * ------------------------------------------------------------------------- */
-void motionCruise(void)
+void motionForward(uint8_t speed)
 {
 	/* Avanzo a velocidad de crucero. */
-	motorSetSpeed(motorL, MOTOR_CRUISE_SPEED);
-	motorSetSpeed(motorR, MOTOR_CRUISE_SPEED * MOTOR_LR_OFFSET);
+	motorSetSpeed(motorL, speed);
+	motorSetSpeed(motorR, speed * MOTOR_LR_OFFSET);
 }
 
 /* -------------------------------------------------------------------------
  *  Función de embestida cuando el objetivo está en frente.
  * ------------------------------------------------------------------------- */
-void motionFullOn(void)
+void motionBackwards(uint8_t speed)
 {
 	/* Embisto a toda velocidad. */
-	motorSetSpeed(motorL, MOTOR_ATTACK_SPEED);
-	motorSetSpeed(motorR, MOTOR_ATTACK_SPEED * MOTOR_LR_OFFSET);
+	motorSetSpeed(motorL, -speed);
+	motorSetSpeed(motorR, -(speed * MOTOR_LR_OFFSET));
 }
 
 /* -------------------------------------------------------------------------
@@ -72,9 +72,64 @@ void motionTurn(motionDirection direction, motionAngle angle)
 	motorSetSpeed(motorR, 0);
 }
 
+/* -------------------------------------------------------------------------
+ *  Función de movimiento del modo RC.
+ * ------------------------------------------------------------------------- */
+void motionRcOperation(char input)
+{
+	/* Respuesta del SUMO a cada entrada recibida. */
+	switch (input)
+	{
+		case 'F':  /* Adelante */
+			motorSetSpeed(motorL, MOTOR_RC_BASE_SPEED);
+			motorSetSpeed(motorR, MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET);
+			break;
+
+		case 'B':  /* Atrás */
+			motorSetSpeed(motorL, -MOTOR_RC_BASE_SPEED);
+			motorSetSpeed(motorR, -(MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET));
+			break;
+
+		case 'L':  /* Izquierda */
+			motorSetSpeed(motorL, -MOTOR_RC_BASE_SPEED);
+			motorSetSpeed(motorR,  (MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET));
+			break;
+
+		case 'R':  /* Derecha */
+			motorSetSpeed(motorL,  MOTOR_RC_BASE_SPEED);
+			motorSetSpeed(motorR, -(MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET));
+			break;
+
+		case 'G': /* Adelante - Izquierda */
+			motorSetSpeed(motorL, MOTOR_RC_BASE_SPEED * 0.5);
+			motorSetSpeed(motorR, (MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET));
+			break;
+
+		case 'I': /* Adelante - Derecha */
+			motorSetSpeed(motorL, MOTOR_RC_BASE_SPEED);
+			motorSetSpeed(motorR, (MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET) * 0.5);
+			break;
+
+		case 'H': /* Atrás - Izquierda */
+			motorSetSpeed(motorL, -MOTOR_RC_BASE_SPEED * 0.5);
+			motorSetSpeed(motorR, -(MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET));
+			break;
+
+		case 'J':  /* Atrás - Derecha */
+			motorSetSpeed(motorL, -MOTOR_RC_BASE_SPEED);
+			motorSetSpeed(motorR, -(MOTOR_RC_BASE_SPEED * MOTOR_LR_OFFSET) * 0.5);
+			break;
+
+		case 'S':
+		default:  /* No se pulsó nada. */
+			motorSetSpeed(motorL, 0);
+			motorSetSpeed(motorR, 0);
+			break;
+	}
+}
 
 /* -------------------------------------------------------------------------
- *  Función de Testeo.
+ *  Función de prueba de movimientos. Bloqueante.
  * ------------------------------------------------------------------------- */
 void motionTest(void)
 {
@@ -82,47 +137,24 @@ void motionTest(void)
 	delay(1500);
 	Serial.println("Prueba de movimiento en marcha.\n");
 
-	/* Avanzo a paso crucero y hace un cuadrado girando a la izquierda. */
-	Serial.println("Avanzando despacio.");
-	motionCruise();
-	delay(1000);
-
-	Serial.println("Giro de 90º a la izquierda.");
-	motionTurn(MOTION_LEFT, MOTION_90);
-
-	Serial.println("Avanzando despacio.");
-	motionCruise();
-	delay(1000);
-
-	Serial.println("Giro de 90º a la izquierda.");
-	motionTurn(MOTION_LEFT, MOTION_90);
-
-	Serial.println("Avanzando despacio.");
-	motionCruise();
-	delay(1000);
-
-	Serial.println("Giro de 90º a la izquierda.");
-	motionTurn(MOTION_LEFT, MOTION_90);
-
-	Serial.println("Avanzando despacio.");
-	motionCruise();
-	delay(1000);
-
-	Serial.println("Giro de 90º a la izquierda.");
-	motionTurn(MOTION_LEFT, MOTION_90);
-
-	/* Prueba del modo embestida, mitad de tiempo. */
-	Serial.println("Avanzando fuerte.");
-	motionFullOn();
+	/* Avanzo a paso crucero. */
+	Serial.println("Avanzo a paso crucero.");
+	motionForward(MOTOR_CRUISE_SPEED);
 	delay(500);
 
-	/* Giro de 180 grados a la derecha, y vuelvo a la posición inicial. */
-	Serial.println("Giro de 180º a la derecha.");
-	motionTurn(MOTION_RIGHT, MOTION_180);
+	/* Retrocedo a paso crucero. */
+	Serial.println("Retrocedo a paso crucero.");
+	motionBackwards(MOTOR_CRUISE_SPEED);
+	delay(500);
 
-	Serial.println("Vuelta al punto inicial.");
-	motionCruise();
-	delay(1000);
+	/* Giro 90º a la izquierda. */
+	Serial.println("Giro 90º a la izquierda.");
+	motionTurn(MOTION_LEFT, MOTION_90);
+	delay(500);
+
+	/* Giro 180º a la derecha. */
+	Serial.println("Giro 180º a la derecha.");
+	motionTurn(MOTION_RIGHT, MOTION_180);
 
 	/* Fin de la prueba, freno los motores y cuelgo el programa. */
 	motorSetSpeed(motorL, 0);

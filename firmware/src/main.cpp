@@ -15,6 +15,13 @@
 
 #include "config.h"
 
+/*	Variables. */
+char btData = 0x00;
+unsigned long lastConnTime = 0;
+
+sysResponse ctrl = SYS_FAIL;
+sensorResponse direction = SENSOR_FAIL;
+
 /* -------------------------------------------------------------------------
  *  Función de SetUp
  * ------------------------------------------------------------------------- */
@@ -26,8 +33,9 @@ void setup()
 	/* Inicializacion de Motores. */
 	motionInit();
 
-	/* Motor Test. */
-	motionTest();
+	/* Inicializaciones varias. */
+	pinMode(13, OUTPUT);
+	digitalWrite(13, 0);
 
 	/* Finalizada Inicalización. */
 }
@@ -37,35 +45,53 @@ void setup()
  * ------------------------------------------------------------------------- */
 void loop()
 {
-	/*	Variables. */
-	sensorResponse direction;
-
-	/* Chequeo que los CNY no me den que estoy en la linea.  */
-
-	/* Evaluo los sensores. */
-	direction =  sensorEvaluate();
-	switch(direction)
+	/* Si hay transmisión por BT, entro en modo RC. */
+	if (serialBTAvailable() != SYS_FAIL)
 	{
-		case SENSOR_CENTER:
-			/* Objetivo al Centro. */
-			Serial.println("Centro!");
-			break;
+		/* Enciendo el LED indicador de modo. */
+		digitalWrite(13, 1);
 
-		case SENSOR_LEFT:
-			/* Objetivo a la izquierda. */
-			Serial.println("Izquierda!");
-			break;
+		ctrl = serialBTGetChar(&btData);
+		if (ctrl != SYS_FAIL)
+		{
+			/* Si obtuve el dato, opero en modo RC. */
+			motionRcOperation(btData);
+			lastConnTime = millis();
+		}
 
-		case SENSOR_RIGHT:
-			/* Objetivo a la derecha. */
-			Serial.println("Derecha!");
-			break;
+	/* Si no hay datos por BT, opero en modo autónomo. */
+	} else if ((millis() - lastConnTime) > 500) {
 
-		case SENSOR_FAIL:
-		default:
-			/* Si no tengo nada en frente, avanzo a paso tranqui... */
-			Serial.println("Indeterminado!");
-			break;
+		/* Apago el LED indicador de modo. */
+		digitalWrite(13, 0);
+		
+		/* Chequeo que los CNY no me den que estoy en la linea.  */
+
+		/* Evaluo los sensores. */
+		 direction =  sensorEvaluate();
+		 switch(direction)
+		 {
+		 	case SENSOR_CENTER:
+		 		/* Objetivo al Centro. */
+		 		Serial.println("Centro!");
+		 		break;
+
+		 	case SENSOR_LEFT:
+		 		/* Objetivo a la izquierda. */
+				Serial.println("Izquierda!");
+				break;
+
+			case SENSOR_RIGHT:
+				/* Objetivo a la derecha. */
+				Serial.println("Derecha!");
+				break;
+
+			case SENSOR_FAIL:
+			default:
+		 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
+				Serial.println("Indeterminado!");
+				break;
+		}
+		delay(500);
 	}
-	delay(1000);
 }
