@@ -26,20 +26,31 @@ void serialInit(void)
 
 	/* Inicializo el puerto del módulo BT. */
 	BT.begin(9600);
+}
 
-	//BT.print("AT+NAMESUMOGEEK-1");
+/* -------------------------------------------------------------------------
+ *  Función para determinar si hay datos en el buffer del BT.
+ * ------------------------------------------------------------------------- */
+sysResponse serialBTAvailable(void)
+{
+	/* Si BT recibió datos, retorno satisfactorio. */
+	if(BT.available())
+	{
+		return SYS_SUCCESS;
+	} else {
+		return SYS_FAIL;
+  	}
 }
 
 /* -------------------------------------------------------------------------
  *  Función de intercambio de data entre los puertos serie.
  * ------------------------------------------------------------------------- */
-/* Funcion de prueba de funcionamiento del módulo BT. */
 void serialLoopBack(void)
 {
 	/* Si BT recibió datos, los escribo en el puerto Serie. */
 	if(BT.available())
 	{
-	  Serial.write(BT.read());
+		Serial.write(BT.read());
 	}
 
 	/* Lo que llegue al serie lo mando a BT. */
