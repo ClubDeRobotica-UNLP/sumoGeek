@@ -16,10 +16,11 @@
 #include "config.h"
 
 /*	Variables. */
-sensorResponse direction;
-unsigned long currentTime = 0;
+char btData = 0x00;
 unsigned long lastConnTime = 0;
-unsigned long lastConnection = 0;
+
+sysResponse ctrl = SYS_FAIL;
+sensorResponse direction = SENSOR_FAIL;
 
 /* -------------------------------------------------------------------------
  *  Función de SetUp
@@ -30,7 +31,11 @@ void setup()
 	serialInit();
 
 	/* Inicializacion de Motores. */
-	//motionInit();
+	motionInit();
+
+	/* Inicializaciones varias. */
+	pinMode(13, OUTPUT);
+	digitalWrite(13, 0);
 
 	/* Finalizada Inicalización. */
 }
@@ -43,11 +48,23 @@ void loop()
 	/* Si hay transmisión por BT, entro en modo RC. */
 	if (serialBTAvailable() != SYS_FAIL)
 	{
-		serialLoopBack();
-		lastConnTime = millis();
+		/* Enciendo el LED indicador de modo. */
+		digitalWrite(13, 1);
+
+		ctrl = serialBTGetChar(&btData);
+		if (ctrl != SYS_FAIL)
+		{
+			/* Si obtuve el dato, opero en modo RC. */
+			motionRcOperation(btData);
+			lastConnTime = millis();
+		}
 
 	/* Si no hay datos por BT, opero en modo autónomo. */
 	} else if ((millis() - lastConnTime) > 500) {
+
+		/* Apago el LED indicador de modo. */
+		digitalWrite(13, 0);
+		
 		/* Chequeo que los CNY no me den que estoy en la linea.  */
 
 		/* Evaluo los sensores. */
@@ -75,6 +92,6 @@ void loop()
 				Serial.println("Indeterminado!");
 				break;
 		}
-		delay(1000);
+		delay(500);
 	}
 }

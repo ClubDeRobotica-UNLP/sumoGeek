@@ -43,6 +43,21 @@ sysResponse serialBTAvailable(void)
 }
 
 /* -------------------------------------------------------------------------
+ *  Función para devolver un caracter leido por el canal BT.
+ * ------------------------------------------------------------------------- */
+sysResponse serialBTGetChar(char* data)
+{
+	/* Si BT recibió datos, devuelvo el dato. */
+	if(BT.available())
+	{
+		*data =  BT.read();
+		return SYS_SUCCESS;
+	} else {
+		return SYS_FAIL;
+  	}
+}
+
+/* -------------------------------------------------------------------------
  *  Función de intercambio de data entre los puertos serie.
  * ------------------------------------------------------------------------- */
 void serialLoopBack(void)

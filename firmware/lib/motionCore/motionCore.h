@@ -22,9 +22,11 @@ typedef enum {
 
 /* Declaracion de funciones. */
 void motionInit(void);
-void motionCruise(void);
-void motionFullOn(void);
+void motionForward(uint8_t speed);
+void motionBackwards(uint8_t speed);
 void motionTurn(motionDirection direction, motionAngle angle);
+
+void motionRcOperation(char input);
 
 void motionTest(void);
 
