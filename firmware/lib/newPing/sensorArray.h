@@ -19,6 +19,7 @@ typedef enum {
 } sensorResponse;
 
 /* Declaración de Funciones. */
+void sensorInit(void);
 sensorResponse sensorEvaluate(void);
 
 #endif	/* SRC_LIB_SENSORARRAY_H_ */

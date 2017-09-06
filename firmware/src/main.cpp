@@ -29,6 +29,7 @@ void setup()
 {
 	/* Inicialización de módulos. */
 	serialInit();
+	sensorInit();
 
 	/* Inicializacion de Motores. */
 	motionInit();
@@ -64,8 +65,15 @@ void loop()
 
 		/* Apago el LED indicador de modo. */
 		digitalWrite(13, 0);
-		
+
 		/* Chequeo que los CNY no me den que estoy en la linea.  */
+		if (digitalRead(SENSOR_CNY_PIN) == SENSOR_CNY_BLACK)
+		{
+			/* TBD */
+			motionBackwards(200);
+			delay(200);
+			motionTurn(MOTION_LEFT, MOTION_180);
+		}
 
 		/* Evaluo los sensores. */
 		 direction =  sensorEvaluate();
@@ -74,24 +82,28 @@ void loop()
 		 	case SENSOR_CENTER:
 		 		/* Objetivo al Centro. */
 		 		Serial.println("Centro!");
+			    motionForward(MOTOR_ATTACK_SPEED);
 		 		break;
 
 		 	case SENSOR_LEFT:
 		 		/* Objetivo a la izquierda. */
 				Serial.println("Izquierda!");
+				motionTurn(MOTION_LEFT, MOTION_90);
 				break;
 
 			case SENSOR_RIGHT:
 				/* Objetivo a la derecha. */
 				Serial.println("Derecha!");
+				motionTurn(MOTION_RIGHT, MOTION_90);
 				break;
 
 			case SENSOR_FAIL:
 			default:
 		 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
 				Serial.println("Indeterminado!");
+				motionForward(MOTOR_CRUISE_SPEED);
 				break;
 		}
-		delay(500);
+		delay(50);
 	}
 }

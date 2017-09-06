@@ -18,6 +18,16 @@
  NewPing sensorR(SENSOR_RIGHT_TRIGGER, SENSOR_RIGHT_ECHO, SENSOR_MAX_DISTANCE);
  NewPing sensorC(SENSOR_CENTER_TRIGGER, SENSOR_CENTER_ECHO, SENSOR_MAX_DISTANCE);
 
+
+ /* -------------------------------------------------------------------------
+  *  Función de incialización del arreglo de sensores.
+  * ------------------------------------------------------------------------- */
+ void sensorInit(void)
+ {
+	 pinMode(SENSOR_CNY_PIN, INPUT);
+ }
+
+
 /* -------------------------------------------------------------------------
  *  Función para evaluar la direción del objetivo más cercano.
  * ------------------------------------------------------------------------- */
@@ -41,15 +51,6 @@ sensorResponse sensorEvaluate(void)
 	{
 		tempC = 0xFFFF;
 	}
-
-	/*	Info de Debug....
-	Serial.print("Left: ");
-	Serial.print(tempL);
-	Serial.print(" - Center: ");
-	Serial.print(tempC);
-	Serial.print(" - Right: ");
-	Serial.println(tempR);
-	*/
 
 	/* Evaluo Left vs Right si es que ambas son válidas. */
 	if (tempL < tempR)

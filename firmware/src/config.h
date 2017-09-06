@@ -26,7 +26,7 @@ typedef enum {
 #define MOTOR_R_PIN_A	3          /*  Pin A del motor R. */
 #define MOTOR_R_PIN_B	2          /*  Pin B del motor R. */
 
-#define MOTOR_LR_OFFSET   0.9  /* Offset para igualar velocidad de motores. */
+#define MOTOR_LR_OFFSET   1  /* Offset para igualar velocidad de motores. */
 
 /* Velocidades de modo Autónomo. */
 #define MOTOR_CRUISE_SPEED     70  /* Velocidad para movimientos.  */
@@ -38,16 +38,20 @@ typedef enum {
 #define MOTOR_RC_BASE_SPEED   220
 
 /* Declaración de pines de Sensores. */
-#define SENSOR_LEFT_TRIGGER     0  /*  Pin Trigger del sensor Izquierdo. */
-#define SENSOR_LEFT_ECHO        0  /*  Pin Echo del sensor Izquierdo.    */
+#define SENSOR_LEFT_TRIGGER    16  /*  Pin Trigger del sensor Izquierdo. */
+#define SENSOR_LEFT_ECHO       17  /*  Pin Echo del sensor Izquierdo.    */
 
-#define SENSOR_RIGHT_TRIGGER	0  /*  Pin Trigger del sensor Derecho.   */
-#define SENSOR_RIGHT_ECHO       0  /*  Pin Echo del sensor Derecho.      */
+#define SENSOR_RIGHT_TRIGGER   18  /*  Pin Trigger del sensor Derecho.   */
+#define SENSOR_RIGHT_ECHO      19  /*  Pin Echo del sensor Derecho.      */
 
-#define SENSOR_CENTER_TRIGGER   0  /*  Pin Trigger del sensor Central.   */
-#define SENSOR_CENTER_ECHO      0  /*  Pin Echo del sensor Central.      */
+#define SENSOR_CENTER_TRIGGER  14  /*  Pin Trigger del sensor Central.   */
+#define SENSOR_CENTER_ECHO     15  /*  Pin Echo del sensor Central.      */
 
 #define SENSOR_MAX_DISTANCE    50  /*  Distancia máxima a evaluar.       */
+
+/* Declaración de pines del CNY70 */
+#define SENSOR_CNY_PIN          9
+#define SENSOR_CNY_BLACK        1
 
 /* Declaracion de pines del módulo BT. */
 #define COMMS_BT_RX    10
