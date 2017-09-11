@@ -29,10 +29,11 @@ typedef enum {
 #define MOTOR_LR_OFFSET   1  /* Offset para igualar velocidad de motores. */
 
 /* Velocidades de modo Autónomo. */
-#define MOTOR_CRUISE_SPEED     70  /* Velocidad para movimientos.  */
+#define MOTOR_CRUISE_SPEED    120  /* Velocidad para movimientos.  */
 #define MOTOR_ATTACK_SPEED    200  /* Velocidad de ataque.         */
 #define MOTOR_TURN_SPEED      150  /* Velocidad de giro.           */
-#define MOTOR_TURN_TIME       650  /* Tiempo en ms para girar 90º. */
+
+#define MOTION_TURN_TIME_90   650  /* Tiempo en ms para girar 90º. */
 
 /* Velocidades de modo RC. */
 #define MOTOR_RC_BASE_SPEED   220

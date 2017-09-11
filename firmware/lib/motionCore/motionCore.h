@@ -15,16 +15,11 @@ typedef enum {
 	MOTION_RIGHT  = 1               /* Respuesta de Falla genérica. */
 } motionDirection;
 
-typedef enum {
-	MOTION_90 = 1,                /* Giro de 90 grados. */
-	MOTION_180                    /* Gito de 180 grados. */
-} motionAngle;
-
 /* Declaracion de funciones. */
 void motionInit(void);
 void motionForward(uint8_t speed);
 void motionBackwards(uint8_t speed);
-void motionTurn(motionDirection direction, motionAngle angle);
+void motionTurn(motionDirection direction, unsigned int timeInMs);
 
 void motionRcOperation(char input);
 

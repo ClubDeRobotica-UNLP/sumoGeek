@@ -72,7 +72,7 @@ void loop()
 			/* TBD */
 			motionBackwards(200);
 			delay(200);
-			motionTurn(MOTION_LEFT, MOTION_180);
+			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
 		}
 
 		/* Evaluo los sensores. */
@@ -88,13 +88,13 @@ void loop()
 		 	case SENSOR_LEFT:
 		 		/* Objetivo a la izquierda. */
 				Serial.println("Izquierda!");
-				motionTurn(MOTION_LEFT, MOTION_90);
+				motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
 				break;
 
 			case SENSOR_RIGHT:
 				/* Objetivo a la derecha. */
 				Serial.println("Derecha!");
-				motionTurn(MOTION_RIGHT, MOTION_90);
+				motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
 				break;
 
 			case SENSOR_FAIL:

@@ -52,8 +52,11 @@ void motionBackwards(uint8_t speed)
 
 /* -------------------------------------------------------------------------
  *  Función de giro.
+ *  Gira en la direccion indicada por [direction] definida por constantes
+ *  durante [timeInMs] milisegundos, prefiriendose que se opere sobre la
+ *  constante calibrada MOTION_TIME_90.
  * ------------------------------------------------------------------------- */
-void motionTurn(motionDirection direction, motionAngle angle)
+void motionTurn(motionDirection direction, unsigned int timeInMs)
 {
 	/* Variables. */
 	int tempSpeed;
@@ -65,7 +68,7 @@ void motionTurn(motionDirection direction, motionAngle angle)
 	motorSetSpeed(motorR, -(tempSpeed * MOTOR_LR_OFFSET));
 
 	/* Espero el tiempo especificado. */
-	delay( angle * MOTOR_TURN_TIME);
+	delay(timeInMs);
 
 	/* Dejo de girar. */
 	motorSetSpeed(motorL, 0);
@@ -149,12 +152,12 @@ void motionTest(void)
 
 	/* Giro 90º a la izquierda. */
 	Serial.println("Giro 90º a la izquierda.");
-	motionTurn(MOTION_LEFT, MOTION_90);
+	motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
 	delay(500);
 
 	/* Giro 180º a la derecha. */
 	Serial.println("Giro 180º a la derecha.");
-	motionTurn(MOTION_RIGHT, MOTION_180);
+	motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90 * 2);
 
 	/* Fin de la prueba, freno los motores y cuelgo el programa. */
 	motorSetSpeed(motorL, 0);
