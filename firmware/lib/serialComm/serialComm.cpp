@@ -74,3 +74,8 @@ void serialLoopBack(void)
 	   BT.write(Serial.read());
 	}
 }
+
+void sendBT(char* string)
+{
+	BT.println(string);
+}

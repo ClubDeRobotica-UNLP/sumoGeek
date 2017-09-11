@@ -19,5 +19,6 @@ void serialLoopBack(void);
 
 sysResponse serialBTAvailable(void);
 sysResponse serialBTGetChar(char* data);
+void sendBT(char* string);
 
 #endif	/* SRC_LIB_SERIALPARSER_H_ */

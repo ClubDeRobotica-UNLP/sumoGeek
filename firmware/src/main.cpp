@@ -67,43 +67,47 @@ void loop()
 		digitalWrite(13, 0);
 
 		/* Chequeo que los CNY no me den que estoy en la linea.  */
-		if (digitalRead(SENSOR_CNY_PIN) == SENSOR_CNY_BLACK)
+		if (digitalRead(SENSOR_CNY_PIN) != SENSOR_CNY_BLACK)
 		{
 			/* TBD */
-			motionBackwards(200);
-			delay(200);
+			Serial.println("Linea!");
+			motionBackwards(240);
+			delay(750);
 			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
+		} else {
+
+			/* Evaluo los sensores. */
+			 direction =  sensorEvaluate();
+			 switch(direction)
+			 {
+			 	case SENSOR_CENTER:
+			 		/* Objetivo al Centro. */
+			 		Serial.println("Centro!");
+
+				    motionForward(MOTOR_ATTACK_SPEED);
+			 		delay(500);
+					break;
+
+			 	case SENSOR_LEFT:
+			 		/* Objetivo a la izquierda. */
+					Serial.println("Izquierda!");
+					motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
+					break;
+
+				case SENSOR_RIGHT:
+					/* Objetivo a la derecha. */
+					Serial.println("Derecha!");
+					motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
+					break;
+
+				case SENSOR_FAIL:
+				default:
+			 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
+					Serial.println("Indeterminado!");
+					motionForward(MOTOR_CRUISE_SPEED);
+					delay(500);
+					break;
+			}
 		}
-
-		/* Evaluo los sensores. */
-		 direction =  sensorEvaluate();
-		 switch(direction)
-		 {
-		 	case SENSOR_CENTER:
-		 		/* Objetivo al Centro. */
-		 		Serial.println("Centro!");
-			    motionForward(MOTOR_ATTACK_SPEED);
-		 		break;
-
-		 	case SENSOR_LEFT:
-		 		/* Objetivo a la izquierda. */
-				Serial.println("Izquierda!");
-				motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
-				break;
-
-			case SENSOR_RIGHT:
-				/* Objetivo a la derecha. */
-				Serial.println("Derecha!");
-				motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
-				break;
-
-			case SENSOR_FAIL:
-			default:
-		 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
-				Serial.println("Indeterminado!");
-				motionForward(MOTOR_CRUISE_SPEED);
-				break;
-		}
-		delay(50);
 	}
 }
