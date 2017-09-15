@@ -22,6 +22,19 @@ unsigned long lastConnTime = 0;
 sysResponse ctrl = SYS_FAIL;
 sensorResponse direction = SENSOR_FAIL;
 
+
+/* Rutina de interrupcion por detección de linea. */
+void cnyIsr(void)
+{
+	cli();
+	//Serial.println("Linea!");
+	motionBackwards(250);
+	//delay(400);
+	//motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
+	sei();
+}
+
+
 /* -------------------------------------------------------------------------
  *  Función de SetUp
  * ------------------------------------------------------------------------- */
@@ -30,6 +43,7 @@ void setup()
 	/* Inicialización de módulos. */
 	serialInit();
 	sensorInit();
+	//attachInterrupt(digitalPinToInterrupt(SENSOR_CNY_PIN), cnyIsr, LOW);
 
 	/* Inicializacion de Motores. */
 	motionInit();
@@ -44,10 +58,24 @@ void setup()
 /* -------------------------------------------------------------------------
  *  Main Loop
  * ------------------------------------------------------------------------- */
-void loop()
+
+void loop(){
+
+	motionForward(MOTOR_CRUISE_SPEED);
+	if (!(PIND & 0b100))
+	{
+		//Serial.println("Linea!");
+		motionBackwards(240);
+		delay(750);
+		//motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
+	}
+}
+
+void loop2()
 {
 	/* Si hay transmisión por BT, entro en modo RC. */
-	if (serialBTAvailable() != SYS_FAIL)
+	//if (serialBTAvailable() != SYS_FAIL)
+	if (0)
 	{
 		/* Enciendo el LED indicador de modo. */
 		digitalWrite(13, 1);
@@ -66,48 +94,43 @@ void loop()
 		/* Apago el LED indicador de modo. */
 		digitalWrite(13, 0);
 
-		/* Chequeo que los CNY no me den que estoy en la linea.  */
-		if (digitalRead(SENSOR_CNY_PIN) != SENSOR_CNY_BLACK)
+		if (!(PIND & 0b100))
 		{
-			/* TBD */
-			Serial.println("Linea!");
+			//Serial.println("Linea!");
 			motionBackwards(240);
 			delay(750);
 			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
-		} else {
+		}
 
-			/* Evaluo los sensores. */
-			 direction =  sensorEvaluate();
-			 switch(direction)
-			 {
-			 	case SENSOR_CENTER:
-			 		/* Objetivo al Centro. */
-			 		Serial.println("Centro!");
+		/* Evaluo los sensores. */
+		 //direction =  sensorEvaluate();
+		 direction = SENSOR_FAIL;
+		 switch(direction)
+		 {
+		 	case SENSOR_CENTER:
+		 		/* Objetivo al Centro. */
+		 		//Serial.println("Centro!");
+			    motionForward(MOTOR_ATTACK_SPEED);
+				break;
 
-				    motionForward(MOTOR_ATTACK_SPEED);
-			 		delay(500);
-					break;
+		 	case SENSOR_LEFT:
+		 		/* Objetivo a la izquierda. */
+				//Serial.println("Izquierda!");
+				motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
+				break;
 
-			 	case SENSOR_LEFT:
-			 		/* Objetivo a la izquierda. */
-					Serial.println("Izquierda!");
-					motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
-					break;
+			case SENSOR_RIGHT:
+				/* Objetivo a la derecha. */
+				//Serial.println("Derecha!");
+				motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
+				break;
 
-				case SENSOR_RIGHT:
-					/* Objetivo a la derecha. */
-					Serial.println("Derecha!");
-					motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
-					break;
-
-				case SENSOR_FAIL:
-				default:
-			 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
-					Serial.println("Indeterminado!");
-					motionForward(MOTOR_CRUISE_SPEED);
-					delay(500);
-					break;
-			}
+			case SENSOR_FAIL:
+			default:
+		 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
+				//Serial.println("Indeterminado!");
+				motionForward(MOTOR_CRUISE_SPEED);
+				break;
 		}
 	}
 }

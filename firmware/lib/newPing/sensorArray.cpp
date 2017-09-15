@@ -24,7 +24,7 @@
   * ------------------------------------------------------------------------- */
  void sensorInit(void)
  {
-	 pinMode(SENSOR_CNY_PIN, INPUT);
+	 pinMode(SENSOR_CNY_PIN, INPUT_PULLUP);
  }
 
 
