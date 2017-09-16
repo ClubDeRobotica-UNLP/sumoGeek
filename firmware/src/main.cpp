@@ -98,7 +98,7 @@ void loop()
 		{
 			Serial.println("Linea!");
 			motionBackwards(200);
-			delay(750);
+			delay(400);
 			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 1.2);
 		}
 

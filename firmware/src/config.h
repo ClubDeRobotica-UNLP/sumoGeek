@@ -41,7 +41,7 @@ typedef enum {
 #define MOTOR_ATTACK_SPEED    250  /* Velocidad de ataque.         */
 #define MOTOR_TURN_SPEED      200  /* Velocidad de giro.           */
 
-#define MOTION_TURN_TIME_90   600  /* Tiempo en ms para girar 90º. */
+#define MOTION_TURN_TIME_90   400  /* Tiempo en ms para girar 90º. */
 
 /* Velocidades de modo RC. */
 #define MOTOR_RC_BASE_SPEED   250
