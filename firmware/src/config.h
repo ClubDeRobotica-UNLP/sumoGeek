@@ -17,6 +17,14 @@ typedef enum {
 	SYS_FAIL                        /* Respuesta de Falla genérica. */
 } sysResponse;
 
+/* Declaracion de Estados. */
+typedef enum {
+	STATE_ATTACK,
+	STATE_HUNT,
+	STATE_LINE
+} sysState;
+
+
 /* Declaración de pines y constantes de Motores. */
 #define MOTOR_L_PIN_E	8          /* Enable del motor L. */
 #define MOTOR_L_PIN_A	5          /*  Pin A del motor L. */
@@ -29,21 +37,21 @@ typedef enum {
 #define MOTOR_LR_OFFSET   1  /* Offset para igualar velocidad de motores. */
 
 /* Velocidades de modo Autónomo. */
-#define MOTOR_CRUISE_SPEED    155  /* Velocidad para movimientos.  */
+#define MOTOR_CRUISE_SPEED    150  /* Velocidad para movimientos.  */
 #define MOTOR_ATTACK_SPEED    250  /* Velocidad de ataque.         */
 #define MOTOR_TURN_SPEED      200  /* Velocidad de giro.           */
 
 #define MOTION_TURN_TIME_90   600  /* Tiempo en ms para girar 90º. */
 
 /* Velocidades de modo RC. */
-#define MOTOR_RC_BASE_SPEED   240
+#define MOTOR_RC_BASE_SPEED   250
 
 /* Declaración de pines de Sensores. */
-#define SENSOR_LEFT_TRIGGER    18  /*  Pin Trigger del sensor Izquierdo. */
-#define SENSOR_LEFT_ECHO       19  /*  Pin Echo del sensor Izquierdo.    */
+#define SENSOR_LEFT_TRIGGER    16  /*  Pin Trigger del sensor Izquierdo. */
+#define SENSOR_LEFT_ECHO       17  /*  Pin Echo del sensor Izquierdo.    */
 
-#define SENSOR_RIGHT_TRIGGER   16  /*  Pin Trigger del sensor Derecho.   */
-#define SENSOR_RIGHT_ECHO      17  /*  Pin Echo del sensor Derecho.      */
+#define SENSOR_RIGHT_TRIGGER   18  /*  Pin Trigger del sensor Derecho.   */
+#define SENSOR_RIGHT_ECHO      19  /*  Pin Echo del sensor Derecho.      */
 
 #define SENSOR_CENTER_TRIGGER  14  /*  Pin Trigger del sensor Central.   */
 #define SENSOR_CENTER_ECHO     15  /*  Pin Echo del sensor Central.      */

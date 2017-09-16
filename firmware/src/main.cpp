@@ -18,9 +18,11 @@
 /*	Variables. */
 char btData = 0x00;
 unsigned long lastConnTime = 0;
+unsigned long attackStart = 0;
 
 sysResponse ctrl = SYS_FAIL;
 sensorResponse direction = SENSOR_FAIL;
+sysState status = STATE_HUNT;
 
 
 /* Rutina de interrupcion por detección de linea. */
@@ -92,12 +94,18 @@ void loop()
 		/* Apago el LED indicador de modo. */
 		digitalWrite(13, 0);
 
-		if (!(PIND & 0b100))
+		if ((!(PIND & 0b100)) || (status == STATE_LINE))
 		{
 			Serial.println("Linea!");
 			motionBackwards(240);
 			delay(750);
 			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 1.2);
+		}
+
+		/* Si no estoy atacando, reinicio el contador. */
+		if (status != STATE_ATTACK)
+		{
+			attackStart = 0;
 		}
 
 		/* Evaluo los sensores. */
@@ -107,18 +115,33 @@ void loop()
 		 	case SENSOR_CENTER:
 		 		/* Objetivo al Centro. */
 		 		Serial.println("Centro!");
-			    motionForward(MOTOR_ATTACK_SPEED);
+				status = STATE_ATTACK;
+				/* Si es el primer Centro, registro el tiempo. */
+				if (attackStart == 0)
+				{
+					attackStart = millis();
+				}
+
+				/* Embisto el objetivo como máximo tanto tiempo. */
+				if ((status == STATE_ATTACK) && ((millis() - attackStart) < 2000))
+				{
+					motionForward(MOTOR_ATTACK_SPEED);
+				} else {
+					status = STATE_LINE;
+				}
 				break;
 
 		 	case SENSOR_LEFT:
 		 		/* Objetivo a la izquierda. */
 				Serial.println("Izquierda!");
+				status = STATE_HUNT;
 				motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
 				break;
 
 			case SENSOR_RIGHT:
 				/* Objetivo a la derecha. */
 				Serial.println("Derecha!");
+				status = STATE_HUNT;
 				motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
 				break;
 
@@ -126,6 +149,7 @@ void loop()
 			default:
 		 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
 				Serial.println("Indeterminado!");
+				status = STATE_HUNT;
 				motionForward(MOTOR_CRUISE_SPEED);
 				break;
 		}
