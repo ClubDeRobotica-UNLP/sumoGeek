@@ -59,23 +59,21 @@ void setup()
  *  Main Loop
  * ------------------------------------------------------------------------- */
 
-void loop(){
+void loop2(){
 
-	motionForward(MOTOR_CRUISE_SPEED);
-	if (!(PIND & 0b100))
-	{
-		//Serial.println("Linea!");
-		motionBackwards(240);
-		delay(750);
-		//motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
-	}
+	motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
+
+	delay(1000);
+
+	motionTurn(MOTION_RIGHT,MOTION_TURN_TIME_90);
+
+	delay(1000);
 }
 
-void loop2()
+void loop()
 {
 	/* Si hay transmisión por BT, entro en modo RC. */
-	//if (serialBTAvailable() != SYS_FAIL)
-	if (0)
+	if (serialBTAvailable() != SYS_FAIL)
 	{
 		/* Enciendo el LED indicador de modo. */
 		digitalWrite(13, 1);
@@ -96,39 +94,38 @@ void loop2()
 
 		if (!(PIND & 0b100))
 		{
-			//Serial.println("Linea!");
+			Serial.println("Linea!");
 			motionBackwards(240);
 			delay(750);
-			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
+			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 1.2);
 		}
 
 		/* Evaluo los sensores. */
-		 //direction =  sensorEvaluate();
-		 direction = SENSOR_FAIL;
+		 direction =  sensorEvaluate();
 		 switch(direction)
 		 {
 		 	case SENSOR_CENTER:
 		 		/* Objetivo al Centro. */
-		 		//Serial.println("Centro!");
+		 		Serial.println("Centro!");
 			    motionForward(MOTOR_ATTACK_SPEED);
 				break;
 
 		 	case SENSOR_LEFT:
 		 		/* Objetivo a la izquierda. */
-				//Serial.println("Izquierda!");
+				Serial.println("Izquierda!");
 				motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
 				break;
 
 			case SENSOR_RIGHT:
 				/* Objetivo a la derecha. */
-				//Serial.println("Derecha!");
+				Serial.println("Derecha!");
 				motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
 				break;
 
 			case SENSOR_FAIL:
 			default:
 		 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
-				//Serial.println("Indeterminado!");
+				Serial.println("Indeterminado!");
 				motionForward(MOTOR_CRUISE_SPEED);
 				break;
 		}

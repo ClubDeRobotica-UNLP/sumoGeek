@@ -29,21 +29,21 @@ typedef enum {
 #define MOTOR_LR_OFFSET   1  /* Offset para igualar velocidad de motores. */
 
 /* Velocidades de modo Autónomo. */
-#define MOTOR_CRUISE_SPEED    130  /* Velocidad para movimientos.  */
+#define MOTOR_CRUISE_SPEED    155  /* Velocidad para movimientos.  */
 #define MOTOR_ATTACK_SPEED    250  /* Velocidad de ataque.         */
 #define MOTOR_TURN_SPEED      200  /* Velocidad de giro.           */
 
-#define MOTION_TURN_TIME_90   650  /* Tiempo en ms para girar 90º. */
+#define MOTION_TURN_TIME_90   600  /* Tiempo en ms para girar 90º. */
 
 /* Velocidades de modo RC. */
 #define MOTOR_RC_BASE_SPEED   240
 
 /* Declaración de pines de Sensores. */
-#define SENSOR_LEFT_TRIGGER    16  /*  Pin Trigger del sensor Izquierdo. */
-#define SENSOR_LEFT_ECHO       17  /*  Pin Echo del sensor Izquierdo.    */
+#define SENSOR_LEFT_TRIGGER    18  /*  Pin Trigger del sensor Izquierdo. */
+#define SENSOR_LEFT_ECHO       19  /*  Pin Echo del sensor Izquierdo.    */
 
-#define SENSOR_RIGHT_TRIGGER   18  /*  Pin Trigger del sensor Derecho.   */
-#define SENSOR_RIGHT_ECHO      19  /*  Pin Echo del sensor Derecho.      */
+#define SENSOR_RIGHT_TRIGGER   16  /*  Pin Trigger del sensor Derecho.   */
+#define SENSOR_RIGHT_ECHO      17  /*  Pin Echo del sensor Derecho.      */
 
 #define SENSOR_CENTER_TRIGGER  14  /*  Pin Trigger del sensor Central.   */
 #define SENSOR_CENTER_ECHO     15  /*  Pin Echo del sensor Central.      */
