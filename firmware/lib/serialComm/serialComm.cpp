@@ -26,7 +26,7 @@ void serialInit(void)
 
 	/* Inicializo el puerto del módulo BT. */
 	BT.begin(9600);
-	BT.print("AT+NAMEGeek-Blanco");
+	BT.print("AT+NAMEGeek-Rojo");
 }
 
 /* -------------------------------------------------------------------------

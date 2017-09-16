@@ -47,11 +47,11 @@ typedef enum {
 #define MOTOR_RC_BASE_SPEED   250
 
 /* Declaración de pines de Sensores. */
-#define SENSOR_LEFT_TRIGGER    16  /*  Pin Trigger del sensor Izquierdo. */
-#define SENSOR_LEFT_ECHO       17  /*  Pin Echo del sensor Izquierdo.    */
+#define SENSOR_LEFT_TRIGGER    18  /*  Pin Trigger del sensor Izquierdo. */
+#define SENSOR_LEFT_ECHO       19  /*  Pin Echo del sensor Izquierdo.    */
 
-#define SENSOR_RIGHT_TRIGGER   18  /*  Pin Trigger del sensor Derecho.   */
-#define SENSOR_RIGHT_ECHO      19  /*  Pin Echo del sensor Derecho.      */
+#define SENSOR_RIGHT_TRIGGER   16  /*  Pin Trigger del sensor Derecho.   */
+#define SENSOR_RIGHT_ECHO      17  /*  Pin Echo del sensor Derecho.      */
 
 #define SENSOR_CENTER_TRIGGER  14  /*  Pin Trigger del sensor Central.   */
 #define SENSOR_CENTER_ECHO     15  /*  Pin Echo del sensor Central.      */

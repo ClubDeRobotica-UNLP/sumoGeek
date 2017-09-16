@@ -97,7 +97,7 @@ void loop()
 		if ((!(PIND & 0b100)) || (status == STATE_LINE))
 		{
 			Serial.println("Linea!");
-			motionBackwards(240);
+			motionBackwards(200);
 			delay(750);
 			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 1.2);
 		}
