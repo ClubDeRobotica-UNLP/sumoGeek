@@ -11,8 +11,14 @@
 #define SRC_LIB_SERIALPARSER_H_
 
 #include <Arduino.h>
+#include <config.h>
 
 /* Función de Inicialización. */
 void serialInit(void);
+void serialLoopBack(void);
+
+sysResponse serialBTAvailable(void);
+sysResponse serialBTGetChar(char* data);
+void sendBT(char* string);
 
 #endif	/* SRC_LIB_SERIALPARSER_H_ */
