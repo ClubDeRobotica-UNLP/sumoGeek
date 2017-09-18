@@ -26,7 +26,7 @@ void serialInit(void)
 
 	/* Inicializo el puerto del módulo BT. */
 	BT.begin(9600);
-	BT.print("AT+NAMEGeek-Cobalto");
+	BT.print("AT+NAMEGeek-Xxxx");
 }
 
 /* -------------------------------------------------------------------------
@@ -76,7 +76,12 @@ void serialLoopBack(void)
 	}
 }
 
+/* -------------------------------------------------------------------------
+ *  Función para enviar un string por el puerto de BT. Util para la
+ *  configuración del mismo o debug del programa.
+ * ------------------------------------------------------------------------- */
 void sendBT(char* string)
 {
+	/*	Imprimo la cadena indicada por el canal BT.	*/
 	BT.println(string);
 }

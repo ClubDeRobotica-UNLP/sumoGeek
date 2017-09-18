@@ -22,19 +22,6 @@ unsigned long lastConnTime = 0;
 sysResponse ctrl = SYS_FAIL;
 sensorResponse direction = SENSOR_FAIL;
 
-
-/* Rutina de interrupcion por detección de linea. */
-void cnyIsr(void)
-{
-	cli();
-	//Serial.println("Linea!");
-	motionBackwards(250);
-	//delay(400);
-	//motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 2);
-	sei();
-}
-
-
 /* -------------------------------------------------------------------------
  *  Función de SetUp
  * ------------------------------------------------------------------------- */
@@ -43,7 +30,6 @@ void setup()
 	/* Inicialización de módulos. */
 	serialInit();
 	sensorInit();
-	//attachInterrupt(digitalPinToInterrupt(SENSOR_CNY_PIN), cnyIsr, LOW);
 
 	/* Inicializacion de Motores. */
 	motionInit();
@@ -58,18 +44,6 @@ void setup()
 /* -------------------------------------------------------------------------
  *  Main Loop
  * ------------------------------------------------------------------------- */
-
-void loop2(){
-
-	motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
-
-	delay(1000);
-
-	motionTurn(MOTION_RIGHT,MOTION_TURN_TIME_90);
-
-	delay(1000);
-}
-
 void loop()
 {
 	/* Si hay transmisión por BT, entro en modo RC. */
