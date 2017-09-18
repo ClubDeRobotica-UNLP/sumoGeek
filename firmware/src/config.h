@@ -17,6 +17,13 @@ typedef enum {
 	SYS_FAIL                        /* Respuesta de Falla genérica. */
 } sysResponse;
 
+/* Declaracion de Estados. */
+typedef enum {
+	STATE_ATTACK,                   /* Estado de Ataque.             */
+    STATE_HUNT,                     /* Estado de búsqueda.           */
+    STATE_LINE                      /* Estado de detección de línea. */
+} sysState;
+
 /* Declaración de pines y constantes de Motores. */
 #define MOTOR_L_PIN_E	8          /* Enable del motor L. */
 #define MOTOR_L_PIN_A	5          /*  Pin A del motor L. */
@@ -33,10 +40,11 @@ typedef enum {
 #define MOTOR_ATTACK_SPEED    250  /* Velocidad de ataque.         */
 #define MOTOR_TURN_SPEED      200  /* Velocidad de giro.           */
 
-#define MOTION_TURN_TIME_90   600  /* Tiempo en ms para girar 90º. */
+#define MOTION_TURN_TIME_90   600  /* Tiempo en ms para girar 90º.          */
+#define MOTION_ATTACK_TIME   1000  /* Tiempo de ataque antes de retroceder. */
 
 /* Velocidades de modo RC. */
-#define MOTOR_RC_BASE_SPEED   240
+#define MOTOR_RC_BASE_SPEED   250
 
 /* Declaración de pines de Sensores. */
 #define SENSOR_LEFT_TRIGGER    18  /*  Pin Trigger del sensor Izquierdo. */
@@ -52,7 +60,6 @@ typedef enum {
 
 /* Declaración de pines del CNY70 */
 #define SENSOR_CNY_PIN          2
-
 #define SENSOR_CNY_BLACK        1
 
 /* Declaracion de pines del módulo BT. */
