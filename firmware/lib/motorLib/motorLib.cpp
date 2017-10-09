@@ -33,9 +33,9 @@ motorControlBlock* motorInit(byte pinEnable, byte pinA, byte pinB)
 		pinMode(pinEnable, OUTPUT);
 
 		/* Empiezo con todos en bajo. */
-		digitalWrite(pinA, 0);
-		digitalWrite(pinB, 0);
-		digitalWrite(pinEnable, 0);
+		digitalWrite(pinA, LOW);
+		digitalWrite(pinB, LOW);
+		digitalWrite(pinEnable, LOW);
 
 		/* Seteo la estructura de control. */
 		controlBlock->motorPinA = pinA;

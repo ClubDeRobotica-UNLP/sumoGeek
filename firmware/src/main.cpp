@@ -8,39 +8,49 @@
  *  Main Sketch.
  * ------------------------------------------------------------------------- */
 #include <Arduino.h>
-#include <serialComm.h>
-#include <sensorArray.h>
+#include "config.h"
+#include <controlLib.h>
+//#include <serialComm.h>
 #include <motionCore.h>
 #include <motorLib.h>
+#include <sensorArray.h>
 
-#include "config.h"
 
+
+
+unsigned long time1, time2;
 /*	Variables. */
-char btData = 0x00;
-unsigned long lastConnTime = 0;
-unsigned long attackStart = 0;
+float distL = 0.0, distR = 0.0;
+volatile float lateralError = 0;
 
-sysResponse ctrl = SYS_FAIL;
-sensorResponse direction = SENSOR_FAIL;
-sysState status = STATE_HUNT;
+//sysResponse ctrl = SYS_FAIL;
+//sensorResponse direction = SENSOR_FAIL;
+//sysState status = STATE_HUNT;
 
+Controller controlPI(10,-80.0,80.0);
+
+void controlCallBack(void);
 /* -------------------------------------------------------------------------
  *  Función de SetUp
  * ------------------------------------------------------------------------- */
 void setup()
 {
 	/* Inicialización de módulos. */
-	serialInit();
+	//serialInit();
 	sensorInit();
 
 	/* Inicializacion de Motores. */
 	motionInit();
 
+	Serial.begin(9600);
 	/* Inicializaciones varias. */
-	pinMode(13, OUTPUT);
-	digitalWrite(13, 0);
-
+	pinMode(13,OUTPUT);
 	/* Finalizada Inicalización. */
+
+	controlPI.setParameters(15.0, 15.0, 0, 8);
+	controlPI.setTimer(controlCallBack);
+	controlPI.startTimer();
+
 }
 
 /* -------------------------------------------------------------------------
@@ -48,85 +58,20 @@ void setup()
  * ------------------------------------------------------------------------- */
 void loop()
 {
-	/* Si hay transmisión por BT, entro en modo RC. */
-	if (serialBTAvailable() != SYS_FAIL)
-	{
-		/* Enciendo el LED indicador de modo. */
-		digitalWrite(13, 1);
 
-		ctrl = serialBTGetChar(&btData);
-		if (ctrl != SYS_FAIL)
-		{
-			/* Si obtuve el dato, opero en modo RC. */
-			motionRcOperation(btData);
-			lastConnTime = millis();
-		}
-
-	/* Si no hay datos por BT, opero en modo autónomo. */
-	} else if ((millis() - lastConnTime) > 500) {
-
-		/* Apago el LED indicador de modo. */
-		digitalWrite(13, 0);
-
-		/* Si detecto la línea, o el estado cambió a STATE_LINE, retrocedo. */
-		if ((!(PIND & 0b100)) || (status == STATE_LINE))
-		{
-			Serial.println("Linea!");
-			motionBackwards(240);
-			delay(750);
-			motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90 * 1.2);
-		}
-
-		/* Si no estoy atacando, reseteo el inicio de ataque. */
-		if (status != STATE_ATTACK)
-		{
-			attackStart = 0;
-		}
-
+		//time1 = micros();
 		/* Evaluo los sensores. */
-		 direction =  sensorEvaluate();
-		 switch(direction)
-		 {
-		 	case SENSOR_CENTER:
-		 		/* Objetivo al Centro. */
-		 		Serial.println("Centro!");
-				status = STATE_ATTACK;
-				/* Si es el primer Centro, registro el tiempo. */
-				if (attackStart == 0)
-				{
-					attackStart = millis();
-				}
-
-				/* Embisto el objetivo como máximo tanto tiempo. */
-				if ((millis() - attackStart) < MOTION_ATTACK_TIME)
-				{
-					motionForward(MOTOR_ATTACK_SPEED);
-				} else {
-					status = STATE_LINE;
-				}
-				break;
-
-		 	case SENSOR_LEFT:
-		 		/* Objetivo a la izquierda. */
-				Serial.println("Izquierda!");
-				motionTurn(MOTION_LEFT, MOTION_TURN_TIME_90);
-				status = STATE_HUNT;
-				break;
-
-			case SENSOR_RIGHT:
-				/* Objetivo a la derecha. */
-				Serial.println("Derecha!");
-				motionTurn(MOTION_RIGHT, MOTION_TURN_TIME_90);
-				status = STATE_HUNT;
-				break;
-
-			case SENSOR_FAIL:
-			default:
-		 		/* Si no tengo nada en frente, avanzo a paso tranqui... */
-				Serial.println("Indeterminado!");
-				motionForward(MOTOR_CRUISE_SPEED);
-				status = STATE_HUNT;
-				break;
+		 if(sensorLateralDistance(&distL, &distR) == SYS_SUCCESS){
+			  lateralError= distR- distL;
 		}
+		//time2=micros()-time1;
+		//Serial.println(time2);
 	}
+
+void controlCallBack(void){
+	float control;
+	uint8_t nominalSpeed =120, differentialSpeed;
+	control = controlPI.compute(lateralError);
+	differentialSpeed = (int) control;
+	motionDifferential(nominalSpeed+differentialSpeed, nominalSpeed-differentialSpeed);
 }

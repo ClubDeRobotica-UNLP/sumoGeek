@@ -51,6 +51,17 @@ void motionBackwards(uint8_t speed)
 }
 
 /* -------------------------------------------------------------------------
+ *  Función de movimiento diferencial
+ * ------------------------------------------------------------------------- */
+void motionDifferential(uint8_t speedL, uint8_t speedR)
+{
+	/* Embisto a toda velocidad. */
+	motorSetSpeed(motorL, speedL);
+	motorSetSpeed(motorR, (speedR * MOTOR_LR_OFFSET));
+}
+
+
+/* -------------------------------------------------------------------------
  *  Función de giro.
  *  Gira en la direccion indicada por [direction] definida por constantes
  *  durante [timeInMs] milisegundos, prefiriendose que se opere sobre la

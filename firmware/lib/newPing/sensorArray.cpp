@@ -1,8 +1,8 @@
 /* -------------------------------------------------------------------------
  *  Project: sumoGeek
- *  Author:  Germán Sc.
- *  Date:    23-08-17
- *  Version: 0.1
+ *  Author:  Germán Sc, Jander.
+ *  Date:    07-10-17
+ *  Version: 0.2
  *
  *  Description:
  *  Biblioteca de funciones encargadas de la lectura e interpretación de
@@ -86,4 +86,22 @@ sensorResponse sensorEvaluate(void)
 
 	/*	No hay medida válida. */
 	return SENSOR_FAIL;
+}
+
+/* -------------------------------------------------------------------------
+ *  Función para evaluar las distancias laterales del objetivo
+ * ------------------------------------------------------------------------- */
+sysResponse sensorLateralDistance(float* distL, float* distR){
+  unsigned long tempL = sensorL.ping(SENSOR_MAX_DISTANCE);
+	unsigned long tempR = sensorR.ping(SENSOR_MAX_DISTANCE);
+  *distL = sensorConvert_cm(tempL);
+  *distR = sensorConvert_cm(tempR);
+
+  if(*distL==0 || *distR==0)
+      return SYS_FAIL;
+  return SYS_SUCCESS;
+}
+
+float sensorConvert_cm(unsigned long echoTime){
+  return (echoTime / US_ROUNDTRIP_CM_FLOAT);
 }

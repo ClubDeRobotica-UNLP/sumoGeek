@@ -10,6 +10,8 @@
 #ifndef SRC_LIB_SENSORARRAY_H_
 #define SRC_LIB_SENSORARRAY_H_
 
+#define US_ROUNDTRIP_CM_FLOAT 58.275
+
 /* Declaracion de Tipos de Respuesta. */
 typedef enum {
  	SENSOR_CENTER = 0,         /* Se detecta el objetivo al frente. */
@@ -21,5 +23,7 @@ typedef enum {
 /* Declaración de Funciones. */
 void sensorInit(void);
 sensorResponse sensorEvaluate(void);
+sysResponse sensorLateralDistance(float*, float*);
+float sensorConvert_cm(unsigned long);
 
 #endif	/* SRC_LIB_SENSORARRAY_H_ */

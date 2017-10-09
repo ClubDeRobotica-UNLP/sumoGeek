@@ -325,15 +325,15 @@ ISR(TIMER4_OVF_vect) {
 	intFunc(); // Call wrapped function.
 }
 #elif defined (__AVR_ATmega8__) || defined (__AVR_ATmega16__) || defined (__AVR_ATmega32__) || defined (__AVR_ATmega8535__) // Alternate timer commands for certain microcontrollers.
-ISR(TIMER2_COMP_vect) {
-	intFunc(); // Call wrapped function.
-}
+// ISR(TIMER2_COMP_vect) {
+// 	intFunc(); // Call wrapped function.
+// }
 #elif defined (__arm__)
 // Do nothing...
 #else
-ISR(TIMER2_COMPA_vect) {
-	intFunc(); // Call wrapped function.
-}
+// ISR(TIMER2_COMPA_vect) {
+// 	intFunc(); // Call wrapped function.
+// }
 #endif
 
 
