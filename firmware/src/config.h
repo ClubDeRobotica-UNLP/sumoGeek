@@ -27,12 +27,12 @@ typedef enum {
 
 /* Declaración de pines y constantes de Motores. */
 #define MOTOR_L_PIN_E	8          /* Enable del motor L. */
-#define MOTOR_L_PIN_A	5          /*  Pin A del motor L. */
-#define MOTOR_L_PIN_B	6          /*  Pin B del motor L. */
+#define MOTOR_L_PIN_A	3          /*  Pin A del motor L. */
+#define MOTOR_L_PIN_B	4          /*  Pin B del motor L. */
 
 #define MOTOR_R_PIN_E	7          /* Enable del motor R. */
-#define MOTOR_R_PIN_A	3          /*  Pin A del motor R. */
-#define MOTOR_R_PIN_B	4          /*  Pin B del motor R. */
+#define MOTOR_R_PIN_A	5          /*  Pin A del motor R. */
+#define MOTOR_R_PIN_B	6          /*  Pin B del motor R. */
 
 #define MOTOR_LR_OFFSET   1  /* Offset para igualar velocidad de motores. */
 
@@ -56,7 +56,7 @@ typedef enum {
 #define SENSOR_CENTER_TRIGGER  14  /*  Pin Trigger del sensor Central.   */
 #define SENSOR_CENTER_ECHO     15  /*  Pin Echo del sensor Central.      */
 
-#define SENSOR_MAX_DISTANCE    50  /*  Distancia máxima a evaluar.       */
+#define SENSOR_MAX_DISTANCE    30  /*  Distancia máxima a evaluar.       */
 
 /* Declaración de pines del CNY70 */
 #define SENSOR_CNY_PIN          2
