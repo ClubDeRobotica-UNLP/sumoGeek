@@ -27,12 +27,12 @@ typedef enum {
 
 /* Declaración de pines y constantes de Motores. */
 #define MOTOR_L_PIN_E	8          /* Enable del motor L. */
-#define MOTOR_L_PIN_A	3          /*  Pin A del motor L. */
-#define MOTOR_L_PIN_B	4          /*  Pin B del motor L. */
+#define MOTOR_L_PIN_A	5          /*  Pin A del motor L. */
+#define MOTOR_L_PIN_B	6          /*  Pin B del motor L. */
 
 #define MOTOR_R_PIN_E	7          /* Enable del motor R. */
-#define MOTOR_R_PIN_A	5          /*  Pin A del motor R. */
-#define MOTOR_R_PIN_B	6          /*  Pin B del motor R. */
+#define MOTOR_R_PIN_A	3          /*  Pin A del motor R. */
+#define MOTOR_R_PIN_B	4          /*  Pin B del motor R. */
 
 #define MOTOR_LR_OFFSET   1  /* Offset para igualar velocidad de motores. */
 
