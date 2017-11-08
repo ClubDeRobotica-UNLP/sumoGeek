@@ -21,7 +21,6 @@ unsigned long lastConnTime = 0;
 unsigned long attackStart = 0;
 
 sysResponse ctrl = SYS_FAIL;
-sensorResponse direction = SENSOR_FAIL;
 sysState status = STATE_HUNT;
 
 /* -------------------------------------------------------------------------
