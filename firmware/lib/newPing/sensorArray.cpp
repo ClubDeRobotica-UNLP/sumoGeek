@@ -91,15 +91,49 @@ sensorResponse sensorEvaluate(void)
 /* -------------------------------------------------------------------------
  *  Función para evaluar las distancias laterales del objetivo
  * ------------------------------------------------------------------------- */
-sysResponse sensorLateralDistance(float* distL, float* distR){
-  unsigned long tempL = sensorL.ping(SENSOR_MAX_DISTANCE);
-	unsigned long tempR = sensorR.ping(SENSOR_MAX_DISTANCE);
-  *distL = sensorConvert_cm(tempL);
+sysResponse sensorRight(float* distR){
+	unsigned long tempR = sensorR.ping_median(5,SENSORR_MAX_DISTANCE);
+
   *distR = sensorConvert_cm(tempR);
 
-  if(*distL==0 || *distR==0)
+  if(*distR==0)
       return SYS_FAIL;
   return SYS_SUCCESS;
+}
+
+sysResponse sensorLeft(float* distL){
+	unsigned long tempL = sensorL.ping_median(5,SENSORL_MAX_DISTANCE);
+
+  *distL = sensorConvert_cm(tempL);
+
+  if(*distL==0)
+      return SYS_FAIL;
+  return SYS_SUCCESS;
+}
+
+sysResponse sensorCenter(float* distC){
+	unsigned long tempC = sensorC.ping_median(5,SENSORC_MAX_DISTANCE);
+
+  *distC = sensorConvert_cm(tempC);
+
+  if(*distC==0)
+      return SYS_FAIL;
+  return SYS_SUCCESS;
+}
+
+uint8_t sensorScanner(void){
+float dist;
+uint8_t flag=0;
+    if(sensorCenter(&dist) == SYS_SUCCESS)
+        if(dist<10)
+          flag |= (1<<SENSOR_CENTER);
+		if(sensorRight(&dist) == SYS_SUCCESS)
+        if(dist<10)
+          flag |= (1<<SENSOR_RIGHT);
+    if(sensorLeft(&dist) == SYS_SUCCESS)
+        if(dist<10)
+          flag |= (1<<SENSOR_LEFT);
+return flag;
 }
 
 float sensorConvert_cm(unsigned long echoTime){

@@ -53,7 +53,7 @@ void motionBackwards(uint8_t speed)
 /* -------------------------------------------------------------------------
  *  Función de movimiento diferencial
  * ------------------------------------------------------------------------- */
-void motionDifferential(uint8_t speedL, uint8_t speedR)
+void motionDifferential(int speedL, int speedR)
 {
 	/* Embisto a toda velocidad. */
 	motorSetSpeed(motorL, speedL);
@@ -176,4 +176,12 @@ void motionTest(void)
 
 	Serial.println("Fin de la prueba.");
 	while(1);
+}
+
+int saturate(int speed){
+	if (speed>255)
+		 return 255;
+	if(speed<-255)
+		return -255;
+	return speed;
 }

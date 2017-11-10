@@ -10,7 +10,7 @@
 // Blog: http://arduino.cc/forum/index.php/topic,106043.0.html
 //
 // DISCLAIMER:
-// This software is furnished "as is", without technical support, and with no 
+// This software is furnished "as is", without technical support, and with no
 // warranty, express or implied, as to its usefulness for any purpose.
 //
 // BACKGROUND:
@@ -18,7 +18,7 @@
 // it worked. Quickly I realized the problem wasn't the sensor, it was the
 // available ping and ultrasonic libraries causing the problem. The NewPing
 // library totally fixes these problems, adds many new features, and breaths
-// new life into these very affordable distance sensors. 
+// new life into these very affordable distance sensors.
 //
 // FEATURES:
 // * Works with many different ultrasonic sensors: SR04, SRF05, SRF06, DYP-ME007, URM37 & Parallax PING))).
@@ -42,7 +42,7 @@
 //     max_cm_distance - [Optional] Maximum distance you wish to sense. Default=500cm.
 //
 // METHODS:
-//   sonar.ping([max_cm_distance]) - Send a ping and get the echo time (in microseconds) as a result. [max_cm_distance] allows you to optionally set a new max distance. 
+//   sonar.ping([max_cm_distance]) - Send a ping and get the echo time (in microseconds) as a result. [max_cm_distance] allows you to optionally set a new max distance.
 //   sonar.ping_in([max_cm_distance]) - Send a ping and get the distance in whole inches. [max_cm_distance] allows you to optionally set a new max distance.
 //   sonar.ping_cm([max_cm_distance]) - Send a ping and get the distance in whole centimeters. [max_cm_distance] allows you to optionally set a new max distance.
 //   sonar.ping_median(iterations [, max_cm_distance]) - Do multiple pings (default=5), discard out of range pings and return median in microseconds. [max_cm_distance] allows you to optionally set a new max distance.
@@ -156,7 +156,7 @@
 #define NO_ECHO 0               // Value returned if there's no ping echo within the specified MAX_SENSOR_DISTANCE or max_cm_distance. Default=0
 #define MAX_SENSOR_DELAY 5800   // Maximum uS it takes for sensor to start the ping. Default=5800
 #define ECHO_TIMER_FREQ 24      // Frequency to check for a ping echo (every 24uS is about 0.4cm accuracy). Default=24
-#define PING_MEDIAN_DELAY 29000 // Microsecond delay between pings in the ping_median method. Default=29000
+#define PING_MEDIAN_DELAY 2500 // Microsecond delay between pings in the ping_median method. Default=29000
 #define PING_OVERHEAD 5         // Ping overhead in microseconds (uS). Default=5
 #define PING_TIMER_OVERHEAD 13  // Ping timer overhead in microseconds (uS). Default=13
 #if URM37_ENABLED == true

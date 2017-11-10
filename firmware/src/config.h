@@ -56,7 +56,7 @@ typedef enum {
 #define SENSOR_CENTER_TRIGGER  14  /*  Pin Trigger del sensor Central.   */
 #define SENSOR_CENTER_ECHO     15  /*  Pin Echo del sensor Central.      */
 
-#define SENSOR_MAX_DISTANCE    50  /*  Distancia máxima a evaluar.       */
+#define SENSOR_MAX_DISTANCE    50
 
 /* Declaración de pines del CNY70 */
 #define SENSOR_CNY_PIN          2
@@ -65,5 +65,37 @@ typedef enum {
 /* Declaracion de pines del módulo BT. */
 #define COMMS_BT_RX    11
 #define COMMS_BT_TX    10
+
+/* PARA EL RESOLVEDOR MODIFICAR ACA */
+/* Declaraciones del maze-resolver */
+#define LEFT_WALL 0
+#define RIGHT_WALL 1
+
+#define WALL_ALGHM LEFT_WALL //seguidor de pared izquierda o derecha
+
+// Definiciones del control
+#define CONTROL_PERIOD 20
+#define CONTROL_DEADZONE 0.25   // histeresis
+#define NOMINAL_SPEED 180
+#define CONTROL_ACTION 100 // Accion de control
+#define WALL_REF 7.5
+#define CENTER_REF 6.0
+#define CENTER_DETECT_PAUSE 300 // tiempo de detencion al detectar frente
+
+
+#define CONTROL_TURN_DELAY 700
+#define CONTROL_TURN_SPEED 200
+#define CONTROL_TURN_SPEED_OFFSET 50
+
+
+#define SENSORL_MAX_DISTANCE    20  /*  Distancia máxima a evaluar.       */
+#define SENSORR_MAX_DISTANCE    20  /*  Distancia máxima a evaluar.       */
+#define SENSORC_MAX_DISTANCE    7.5  /*  Distancia máxima a evaluar.       */
+
+#if WALL_ALGHM
+	#define MAZE_RESOLVER_MEASURE right_wall_funct(); // DERECHA
+#else
+	#define MAZE_RESOLVER_MEASURE left_wall_funct();  // IZQUIERDA
+#endif
 
 #endif	/* SRC_CONFIGURATION_H_ */

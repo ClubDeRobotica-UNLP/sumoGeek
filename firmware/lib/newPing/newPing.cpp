@@ -110,7 +110,7 @@ unsigned long NewPing::ping_median(uint8_t it, unsigned int max_cm_distance) {
 			uS[j] = last;              // Add last ping to array in sorted position.
 			i++;                       // Move to next ping.
 		} else it--;                   // Ping out of range, skip and don't include as part of median.
-
+		
 		if (i < it && micros() - t < PING_MEDIAN_DELAY)
 			delay((PING_MEDIAN_DELAY + t - micros()) / 1000); // Millisecond delay between pings.
 

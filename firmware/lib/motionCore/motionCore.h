@@ -19,10 +19,11 @@ typedef enum {
 void motionInit(void);
 void motionForward(uint8_t speed);
 void motionBackwards(uint8_t speed);
-void motionDifferential(uint8_t speedL, uint8_t speedR);
+void motionDifferential(int speedL, int speedR);
 void motionTurn(motionDirection direction, unsigned int timeInMs);
 
 void motionRcOperation(char input);
+int saturate(int speed);
 
 void motionTest(void);
 

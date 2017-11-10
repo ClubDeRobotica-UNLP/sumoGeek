@@ -20,10 +20,16 @@ typedef enum {
 	SENSOR_FAIL                /* Ocurrió un error en la detección. */
 } sensorResponse;
 
+
+
 /* Declaración de Funciones. */
 void sensorInit(void);
 sensorResponse sensorEvaluate(void);
 sysResponse sensorLateralDistance(float*, float*);
 float sensorConvert_cm(unsigned long);
+uint8_t sensorScanner(void);
+sysResponse sensorRight(float*);
+sysResponse sensorLeft(float*);
+sysResponse sensorCenter(float*);
 
 #endif	/* SRC_LIB_SENSORARRAY_H_ */
